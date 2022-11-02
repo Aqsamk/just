@@ -1,63 +1,46 @@
-//Examine the document object
-//console.dir(document);
-
-/*console.log(document.domain);
-console.log(document.URL);
-console.log(document.title);
-document.title = 123;
-console.log(document.doctype);
-console.log(document.head);
-console.log(document.body);
-console.log(document.all);
-console.log(document.all[10]);
-//document.all[10].textContent = "Hello";
-console.log(document.forms[0]);
-console.log(document.links);*/
-
-/*console.log(document.getElementById('header-title'));
-var headerTitle = document.getElementById('header-title');
-var header = document.getElementById('main-header');
-headerTitle.textContent = ' hello';
-headerTitle.innerText = 'Good Bye';
-headerTitle.textContent = 'Aqsam';
-headerTitle.innerHTML = '<h3>Hello</h3>';
-headerTitle.style.borderBottom = 'solid 3px red';
-header.style.borderBottom = 'solid 4px blue';
-var title = document.getElementsByClassName("title");
-title[0].className*/
-
-//getElementbyclassname
-
-/*var items = document.getElementsByClassName('list-group-item');
-
-console.log(items);
-
-console.log(items[1]);
-
-//items[1].textContent = 'Hello 2';
-
-items[3].style.fontWeight = 'bold';
-
-items[2].style.backgroundColor = 'green';
-
-for(let i = 0;i<items.length;i++){
-
-    items[i].style.fontWeight = 'bold';
-
-}*/
-var li = document.getElementsByTagName('li');
-console.log(li);
-li[1].textContent = 'Hello 2';
-li[1].style.fontWeight = 'bold';
-li[1].style.backgroundColor = 'Pink';
-
-for(var i = 0;i<li.length;i++){
-    li[i].style.backgroundColor = 'pink';
-}
 
 //Quary selector
-var header = document.querySelector('#main-header');
+/*var header = document.querySelector('#main-header');
 header.style.borderBottom = 'solid 4px orange'
+
+var input = document.querySelector('input');
+input.value = 'Hello I am Aqsam';
+
+var submit = document.querySelector('input[type = "submit"]');
+submit.value = "SEND";
+
+var item = document.querySelector('.list-group-item');
+item.style.color = 'red';
+
+var lastItem = document.querySelector('.list-group-item:last-child');
+lastItem.style.color = 'blue';
+var secondItem = document.querySelector('.list-group-item:nth-child(2)');
+
+secondItem.style.color = 'coral';
+secondItem.style.backgroundColor = 'green';
+var thirdItem = document.querySelector('.list-group-item:nth-child(3)');
+
+thirdItem.style.color = 'white';*/
+
+//quaryselectortoall
+
+var titles = document.querySelectorAll('.title');
+console.log(titles);
+titles[0].textContent = 'Hello';
+
+var odd = document.querySelectorAll('li:nth-child(odd)');
+var even = document.querySelectorAll('li:nth-child(even)');
+for(var i =0;i<odd.length;i++){
+    odd[i].style.backgroundColor = 'green';
+}
+for(var i =0;i<even.length;i++){
+    even[i].style.backgroundColor = 'orange';
+
+}
+
+//In quaryselector we can select only one thing at a time first item will be selected by default but 
+//in quaryselectorall we can do anything we can select anything by our choice.
+
 
 
 
