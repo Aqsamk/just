@@ -35,6 +35,7 @@ for(var i =0;i<odd.length;i++){
 }
 for(var i =0;i<even.length;i++){
     even[i].style.backgroundColor = 'orange';
+    console.log('Nothing')
 
 }
 
