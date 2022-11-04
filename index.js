@@ -1,3 +1,4 @@
+localStorage.setItem('name','bob');
 class User {
     static countUsrs = 0
 
@@ -73,4 +74,7 @@ U2.subscribtionActivetill();
 U1.subscribtionActivetill();
 U1.renewmembership();
 Member.countUsers();
+
+
+
 
