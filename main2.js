@@ -10,13 +10,23 @@ myForm.addEventListener('submit',onSubmit);
 
 function onSubmit(e){
     e.preventDefault();
-    var nm = nameInput.value;
+    var name = nameInput.value;
     var mail = emailInput.value;
+    
     const obj = {
-       nm,
+       name,
        mail
     }
-    localStorage.setItem('user Details',JSON.stringify(obj));
+    localStorage.setItem(obj.mail,JSON.stringify(obj));
+
+    if(name === '' || mail === ''){
+        msg.classList.add('error');
+    }else {
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(`${name} : ${mail}` ));
+        userList.appendChild(li);
+        name ='';
+        mail='';
+    }
+
 }
-
-
