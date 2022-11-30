@@ -17,7 +17,7 @@ console.dir(bound);
 console.log(bound(1,2,3))
 
 
-//function for student
+//function for student using bind
 var Student = {age:20};
 var ageOfStudent = function(){
     return this.age;
