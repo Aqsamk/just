@@ -1,18 +1,45 @@
-//let multiply = function(x,y){
- //   console.log(x*y)
-//}
 
-let multiply = function(x){
-    return function(y){
-        console.log(x*y);
+
+//house
+this.table = 'window table';
+console.log(table);
+
+const  cleanTable = (soap) => {
+    
+    const innerFunction = (_soap) =>{
+        console.log(`cleaning ${this.table} using ${_soap}`);
+    }
+    innerFunction(soap);
+}
+cleanTable.call(this,'some soap');
+
+/*this.garage = {
+    table: 'garage table',
+    cleanTable(){
+        console.log(`cleaning ${this.table}`)
+    }
+};
+this.garage.cleanTable();
+console.log(this.garage.table);*/
+
+
+
+
+
+
+class createRoom {
+    constructor(name) {
+        this.table = `${name}s table`;
+    }
+    cleanTable(soap) {
+        console.log(`cleaning ${this.table} using ${soap}`);
     }
 }
-let multiplybyTwo = multiply(2);
- multiplybyTwo(5);
+const jillsRoom = new createRoom('jill');
+const johnsRoom = new createRoom('John');
 
-//let multiplybyThree = multiply.bind(this,3);
-//multiplybyThree(6);
 
-let multiplybyThree = multiply(3);
-multiplybyThree(3);
 
+
+jillsRoom.cleanTable('some soap');
+johnsRoom.cleanTable('some soap')
