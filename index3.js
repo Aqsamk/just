@@ -1,45 +1,42 @@
+//Design pattern problem - How will you design a Student 
+//class which stores the name , age , phone number, board marks of each student. 
+//Make a constructor to initialize the values.
 
 
-//house
-this.table = 'window table';
-console.log(table);
 
-const  cleanTable = (soap) => {
-    
-    const innerFunction = (_soap) =>{
-        console.log(`cleaning ${this.table} using ${_soap}`);
+class Student{
+    static numberOfStudents = 0;
+    constructor(name,age,phone,marks){
+        this.name = name;
+        this.age = age;
+        this.marks = marks
+        this.phone = phone;
+        Student.numberOfStudents += 1;
     }
-    innerFunction(soap);
-}
-cleanTable.call(this,'some soap');
-
-/*this.garage = {
-    table: 'garage table',
-    cleanTable(){
-        console.log(`cleaning ${this.table}`)
+    Print(){
+        console.log(`Student name is ${this.name} and he is ${this.age} year old his phone is ${this.phone} his marks is ${this.marks}`)
     }
-};
-this.garage.cleanTable();
-console.log(this.garage.table);*/
-
-
-
-
-
-
-class createRoom {
-    constructor(name) {
-        this.table = `${name}s table`;
+    Eligible(){
+        
+        if(this.marks>40){
+            console.log('You are eligible for college');
+        }else {
+            console.log('Not Eligible');
+        }
     }
-    cleanTable(soap) {
-        console.log(`cleaning ${this.table} using ${soap}`);
+    EnrolledStudents(){
+        console.log(Student.numberOfStudents);
     }
 }
-const jillsRoom = new createRoom('jill');
-const johnsRoom = new createRoom('John');
 
-
-
-
-jillsRoom.cleanTable('some soap');
-johnsRoom.cleanTable('some soap')
+const s1 = new Student('Aqsam','25','8109832648','89');
+const s2 = new Student('Yash','27','81098348','85');
+const s3 = new Student('Afreen','20','810832648','100');
+const s4 = new Student('Ved','24','81092648','99');
+const s5 = new Student('Vivek','23','81032648','39');
+const s6 = new Student('Roshan','78','53205729',90);
+s1.Print();
+s1.Eligible();
+s5.Eligible();
+s1.EnrolledStudents();
+console.log(Student.numberOfStudents);
