@@ -57,10 +57,11 @@
             })
 
             function showListofRegisteredUser(user){
-                const parentNode = document.getElementById('listOfitems');
-                const createNewUserHtml = `<li id='${user.email}'>${user.name} - ${user.email} - ${user.phonenumber}
-                                                <button onclick=deleteUser('${user.email}')>Delete</button>
-                                                <button onclick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}')>Edit</button>
+                
+                parentNode = document.getElementById('listOfitems');
+                const createNewUserHtml = `<li id='${user._id}'>${user.name} - ${user.email} - ${user.phonenumber}
+                                                <button onclick=deleteUser('${user._id}')>Delete</button>
+                                                <button onclick=editUserDetails('${user._id}','${user.name}','${user.phonenumber}')>Edit</button>
                                             </li>
                                             `
                 console.log(createNewUserHtml)
@@ -77,15 +78,21 @@
             }
             
             
-            function deleteUser(email) {
-                localStorage.removeItem(email)
-                removeItemFromScreen(email)
-
+            function deleteUser(UserId) {
+                //localStorage.removeItem(email)
+                
+                axios.delete(`https://crudcrud.com/api/c0c2a731ace54cb58dfd3a2b442e7653/appointmentData/${UserId}`)
+                .then((response ) => {
+                    removeItemFromScreen(UserId)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
             }
 
-            function removeItemFromScreen(email){
+            function removeItemFromScreen(UserId){
                 const parentNode = document.getElementById('listOfitems');
-                const elem = document.getElementById(email)
+                const elem = document.getElementById(UserId)
                 parentNode.removeChild(elem);
             }
         </script>
