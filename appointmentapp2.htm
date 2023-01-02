@@ -1,5 +1,5 @@
 <html>
-    <body>
+    <body style="background: linear-gradient(135deg, #F97794 10%, #623AA2 100%)">
         <form onsubmit="saveToLocalStorage(event)">
             <label> Name</label>
             <input id="username" type="text" name="username"  required/>
@@ -7,7 +7,7 @@
             <input id="email" type="email" name="emailId"  required/>
             <label> Phone Number</label>
             <input id="phonenumber" type="tel" name="phonenumber1" />
-            <button> Submit </button>
+            <button style="background-color: black;color: blue;"> Submit </button>
         </form>
         <ul id='listOfitems'></ul>
         <script>
@@ -24,7 +24,7 @@
                     email,
                     phonenumber
                 }
-                axios.post("https://crudcrud.com/api/c0c2a731ace54cb58dfd3a2b442e7653/appointmentData",obj)
+                axios.post("https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData",obj)
                 .then((response) => {
                     showListofRegisteredUser(response.data);
                     console.log(response);
@@ -38,7 +38,7 @@
             }
 
             window.addEventListener('DOMContentLoaded', (event) => {
-                axios.get("https://crudcrud.com/api/c0c2a731ace54cb58dfd3a2b442e7653/appointmentData")
+                axios.get("https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData")
                 .then((response) => {
                     for(var i = 0;i<response.data.length;i++){
                         showListofRegisteredUser(response.data[i])
@@ -61,7 +61,7 @@
                 parentNode = document.getElementById('listOfitems');
                 const createNewUserHtml = `<li id='${user._id}'>${user.name} - ${user.email} - ${user.phonenumber}
                                                 <button onclick=deleteUser('${user._id}')>Delete</button>
-                                                <button onclick=editUserDetails('${user._id}','${user.name}','${user.phonenumber}')>Edit</button>
+                                                <button onclick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}','${user._id}')>Edit</button>
                                             </li>
                                             `
                 console.log(createNewUserHtml)
@@ -69,19 +69,28 @@
                 console.log(parentNode.innerHTML)
             }
 
-            function editUserDetails(emailId){
+            function editUserDetails(emailId,name,phonenumber,UserId){
                 document.getElementById('email').value = emailId; 
                 document.getElementById('username').value = name;
                 document.getElementById('phonenumber').value = phonenumber;
+                deleteUser(UserId);
+               /* axios.put(`https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData/${UserId}`)
+                .then((reeponse) => {
 
-                deleteUser(emailId);
+                    console.log('editing started');
+                    removeItemFromScreen(UserId);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })*/
+                
             }
             
             
             function deleteUser(UserId) {
                 //localStorage.removeItem(email)
                 
-                axios.delete(`https://crudcrud.com/api/c0c2a731ace54cb58dfd3a2b442e7653/appointmentData/${UserId}`)
+                axios.delete(`https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData/${UserId}`)
                 .then((response ) => {
                     removeItemFromScreen(UserId)
                 })
