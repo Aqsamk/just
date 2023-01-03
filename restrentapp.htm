@@ -1,0 +1,111 @@
+
+<html>
+<head>
+   
+    <title>Restaurant App</title>
+   
+</head>
+
+<body style="background: linear-gradient(135deg, #F97794 10%, #623AA2 100%)" >
+    <h4 >Restaurant Order List</h4>
+<form onsubmit="saveTocloudStorage(event)">
+    <label >Price</label>
+    <input type="number" id="amount" name="amt" required>
+    <label >Order Summery</label>
+    <input type="text" id="dish" name="dishes" required>
+    <label >Table</label>
+    <select id="tableno"  name="tables" required>
+        <option id="t1">table 1</option>
+        <option id="t2">table 2</option>
+        <option id="t3">table 3</option>
+    </select>
+    <button style="font-style: italic; color:black; background: green;" id="submit">Submit</button>
+</form>
+    <ul id="tab1"><h4 style="color: rebeccapurple;">Table 1</h4> </ul>
+    <ul id="tab2"><h4 style="color: rebeccapurple;">Table 2</h4></ul>
+    <ul id="tab3"><h4 style="color: rebeccapurple;">Table 3</h4> </ul>
+        <script>
+        function saveTocloudStorage(event){
+            event.preventDefault();
+            const price = event.target.amt.value;
+            const meal = event.target.dishes.value;
+            const tableno = event.target.tables.value;
+    
+            const obj = {
+                price,
+                meal,
+                tableno
+            }
+            axios.post("https://crudcrud.com/api/fb58bb657f97488b889c341dae0329d0/orderDetails",obj)
+            .then((order) => {
+               
+                showorderDetails(order.data)
+            })
+            .catch((err) => console.log(err))
+        }
+        window.addEventListener('DOMContentLoaded', (event) => {
+                axios.get("https://crudcrud.com/api/fb58bb657f97488b889c341dae0329d0/orderDetails")
+                .then((response) => {
+                    for(var i = 0;i<response.data.length;i++){
+                        showorderDetails(response.data[i])
+                    }
+                    console.log(response)
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            })
+        function showorderDetails(order){
+            const parentNode1 = document.getElementById('tab1');
+            const parentNode2 = document.getElementById('tab2');
+            const parentNode3 = document.getElementById('tab3');
+                const createNewOrderHtml = `<li id='${order._id}'>${order.meal} - ${order.price} - ${order.tableno}
+                                                <button onclick=cancelOrder('${order._id}')>Delete</button>
+                                               
+                                            </li>
+                                            `
+               if(order.tableno === 'table 1'){
+                parentNode1.innerHTML +=  createNewOrderHtml;
+               }
+               else if(order.tableno === 'table 2'){
+                parentNode2.innerHTML +=  createNewOrderHtml;
+               }
+               else{
+                parentNode3.innerHTML += createNewOrderHtml;
+               }
+                
+        }
+        function cancelOrder(OrderId) {
+                //localStorage.removeItem(email)
+                
+                axios.delete(`https://crudcrud.com/api/fb58bb657f97488b889c341dae0329d0/orderDetails/${OrderId}`)
+                .then((response ) => {
+                    DeleteorderfromList(OrderId)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        function DeleteorderfromList(OrderId){
+                const parentNode1 = document.getElementById('tab1');
+                const parentNode2 = document.getElementById('tab2');
+                const parentNode3 = document.getElementById('tab3');
+                const elem = document.getElementById(OrderId)
+                if(OrderId.tableno === 'table 1'){
+                    parentNode1.removeChild(elem);
+                }
+                else if(OrderId.tableno === 'table 2'){
+                    parentNode2.removeChild(elem);
+                }
+                else {
+                    parentNode3.removeChild(elem);
+                }
+            }
+        
+    
+    </script>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+</html>
