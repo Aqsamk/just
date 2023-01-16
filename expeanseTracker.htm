@@ -1,0 +1,135 @@
+<html>
+<head>
+
+    <title>Expanse Tracker App</title>
+    <style>
+        #container{
+            display: table;
+            text-align: center;
+            border-radius: 10px;
+            grid-template-columns: auto auto auto;
+            grid-template-rows: auto auto auto auto;
+            align-content: center;
+            background-color: peru;
+            padding: 10px;
+            height: 400px;
+            width: 800px;
+            border-style: groove;
+            border-color: red purple blue orange;
+
+        }
+        
+
+       
+    </style>
+
+</head>
+
+<body  >
+    <center>
+    <div id="container">
+        <h2 id="head" style="color: blue;" >Expanse Tracker</h2>
+<form onsubmit="saveTocloudStorage(event)">
+    
+    <label >Amount</label>
+    <input type="number" id="amount" name="amt" required>
+    <label >Description</label>
+    <input type="text" id="description" name="descrip" required>
+    <label >Catagory</label>
+    <select id="catagory"  name="cat" required>
+        <option id="t1">Fuel</option>
+        <option id="t2">Pet</option>
+        <option id="t3">Ration</option>
+        <option id="t4">Trip</option>
+    </select>
+    <button style="font-style: italic; color:black; background: green;" id="submit">Submit</button>
+ 
+</form>
+
+    <ul id="expdetails"> </ul>
+</div>
+    </center>
+        <script>
+        function saveTocloudStorage(event){
+            event.preventDefault();
+            const price = event.target.amt.value;
+            const discription = event.target.descrip.value;
+            const catagory = event.target.cat.value;
+
+            const obj = {
+                price,
+                discription,
+                catagory
+            }
+            axios.post("https://crudcrud.com/api/f5948be1e0c6404b8b84fa5ef9594db8/ExpanseTracker",obj)
+            .then((expansedetails) => {
+
+                showExpDetails(expansedetails.data)
+            })
+            .catch((err) => console.log(err))
+        }
+        window.addEventListener('DOMContentLoaded', (event) => {
+                axios.get("https://crudcrud.com/api/f5948be1e0c6404b8b84fa5ef9594db8/ExpanseTracker")
+                .then((response) => {
+                    for(var i = 0;i<response.data.length;i++){
+                        showExpDetails(response.data[i])
+                    }
+                    console.log(response)
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            })
+        function showExpDetails(expanse){
+            const parentNode = document.getElementById('expdetails');
+           
+                const createNewExpHtml = `<li id='${expanse._id}'>${expanse.discription} - ${expanse.price} - ${expanse.catagory}
+                   
+                                                <button onclick=DeleteExp('${expanse._id}')>Delete</button>
+                                                <button onclick=editExpDetails('${expanse.price}','${expanse.discription}')>Edit</button>
+                                               
+                                            </li>
+                                            `
+              
+                parentNode.innerHTML +=  createNewExpHtml;
+               
+               
+
+        }
+        function DeleteExp(ExpId) {
+                //localStorage.removeItem(email)
+
+                axios.delete(`https://crudcrud.com/api/f5948be1e0c6404b8b84fa5ef9594db8/ExpanseTracker/${ExpId}`)
+                .then((response ) => {
+                    DeleteExpfromList(ExpId)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        function DeleteExpfromList(ExpId){
+                const parentNode = document.getElementById('expdetails');
+                const elem = document.getElementById(ExpId)
+                
+                    parentNode.removeChild(elem);
+                
+        }
+        function editExpDetails(ExpId,amt,description){
+               document.getElementById('amount').value = amt; 
+                document.getElementById('description').value = description;
+               
+                DeleteExp(ExpId);
+               // axios.put(`https://crudcrud.com/api/c8a89071d2fd4926a088a0d4ea186e17/ExpanseTracker/${ExpId}`)
+                //.then((response) => {
+                 //   console.log(response)
+                  //  DeleteExpfromList(ExpId)
+                //})
+                //.catch((err) => console.log(err))
+
+        }
+    </script>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+</html>

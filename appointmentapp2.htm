@@ -24,7 +24,7 @@
                     email,
                     phonenumber
                 }
-                axios.post("https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData",obj)
+                axios.post("",obj)
                 .then((response) => {
                     showListofRegisteredUser(response.data);
                     console.log(response);
@@ -38,7 +38,7 @@
             }
 
             window.addEventListener('DOMContentLoaded', (event) => {
-                axios.get("https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData")
+                axios.get("")
                 .then((response) => {
                     for(var i = 0;i<response.data.length;i++){
                         showListofRegisteredUser(response.data[i])
@@ -90,7 +90,7 @@
             function deleteUser(UserId) {
                 //localStorage.removeItem(email)
                 
-                axios.delete(`https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData/${UserId}`)
+                axios.delete(`/${UserId}`)
                 .then((response ) => {
                     removeItemFromScreen(UserId)
                 })

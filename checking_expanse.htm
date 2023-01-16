@@ -1,0 +1,111 @@
+<html>
+    <body style="background: linear-gradient(135deg, #F97794 10%, #623AA2 100%)">
+        <form onsubmit="saveToCloudStorage(event)">
+            <label>Description</label>
+            <input id="discription" type="text" name="discription"  required/>
+            <label> Amount</label>
+            <input id="amt" type="number" name="amount"  required/>
+            <label>Catagory</label>
+            <select id="select" name="selec">
+                <option>Trip</option>
+                <option>Medicine</option>
+                <option>Pet</option>
+                <option>Ration</option>
+            </select>
+
+            <button style="background-color: black;color: blue;"> Submit </button>
+        </form>
+        <ul id='listOfitems'></ul>
+        <script>
+           async function saveToCloudStorage(event) {
+    event.preventDefault();
+    const description = event.target.discription.value;
+    const money = event.target.amount.value;
+    const catagory = event.target.selec.value;
+
+    const obj = {
+        description,
+        money,
+        catagory
+    }
+    try {
+        const response = await axios.post("https://crudcrud.com/api/aed7459e241e4ad98bbd44dda249acb5/ExpanseDat", obj);
+        showList(response.data);
+
+        console.log(response);
+
+    } catch (err) {
+        document.body.innerHTML = document.body.innerHTML + "<h4>something went wrong</h4>"
+        console.log(err)
+    }
+}
+
+
+function showList(expanse){
+                
+                parentNode = document.getElementById('listOfitems');
+                const createNewUserHtml = `<li id='${expanse._id}'>${expanse.description} - ${expanse.money} - ${expanse.catagory}
+                                                <button onclick=deleteExp('${expanse._id}')>Delete</button>
+                                                <button onclick=editExpDetails('${expanse.description}','${expanse.money}','${expanse._id}')>Edit</button>
+                                            </li>
+                                            `
+                console.log(createNewUserHtml)
+                parentNode.innerHTML +=  createNewUserHtml;
+                console.log(parentNode.innerHTML)
+            }
+
+window.addEventListener('DOMContentLoaded', async (event) => {
+    try {
+        const response = await axios.get("https://crudcrud.com/api/aed7459e241e4ad98bbd44dda249acb5/ExpanseDat");
+        for (var i = 0; i < response.data.length; i++) {
+            showList(response.data[i])
+        }
+        console.log(response)
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+async function editExpDetails(description, cost, ExpId) {
+    document.getElementById('discription').value = description;
+    document.getElementById('amt').value = cost;
+    // document.getElementById('select').value = catagory;
+    try {
+        await deleteExp(ExpId);
+    } catch (err) {
+        console.log(err);
+    }
+    /* axios.put(`https://crudcrud.com/api/f253cfa874674e8483e3daa36ca4b3b0/appointmentData/${UserId}`)
+     .then((reeponse) => {
+
+         console.log('editing started');
+         removeItemFromScreen(UserId);
+     })
+     .catch((err) => {
+         console.log(err);
+     })*/
+
+}
+
+
+async function deleteExp(ExpId) {
+    try {
+        const response = await axios.delete(`https://crudcrud.com/api/aed7459e241e4ad98bbd44dda249acb5/ExpanseDat/${ExpId}`);
+        removeItemFromScreen(ExpId);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+function removeItemFromScreen(ExpId){
+                const parentNode = document.getElementById('listOfitems');
+                const elem = document.getElementById(ExpId)
+                parentNode.removeChild(elem);
+            }
+        </script>
+
+
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+</html>
