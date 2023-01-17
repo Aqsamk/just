@@ -1,10 +1,28 @@
 const http = require('http');
 
-const server = http.createServer((req, res) => {
+/*const server = http.createServer((req, res) => {
   
-  res.end('Hello, my name is Aqsam\n');
+ console.log(req.url,req.method,req.headers)
+  res.setHeader('Content-Type','text/html');
+  res.write('<html>')
+  res.write('<head><title>My First Page</title></head>')
+  res.write('<body><h1>Hello from my Node.js Server</body>')
+  res.write('</html>')
+  res.end();
 });
 
-server.listen(8000, "127.0.0.1",() => {
-    console.log('listning to the port no 8000')
-});
+server.listen(3000);*/
+
+const server = http.createServer((req,res) => {
+  if(req.url === '/home'){
+    res.end('welcome home');
+  }
+  else if(req.url === '/about'){
+    res.end('welcome to about us page')
+  }
+  else{
+    res.end('welcome to my node js page')
+  }
+})
+
+server.listen(3000);
