@@ -23,7 +23,7 @@ const requestHandler = (req,res) => {
         req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
            
-            const message = parsedBody.split('=')[1];
+            const message = parsedBody.split('=')[0];
             fs.writeFileSync('message.text',message)
                 
                 res.statusCode = 302;
