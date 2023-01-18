@@ -10,7 +10,7 @@ app.use((rqs,res,next) => {
 })
 app.use((req,res,next) => {
   console.log('in the another middleware!')
-  res.send()
+  res.send('<h1>Hello</h1>')
 })
  
   
