@@ -1,12 +1,20 @@
 const express=require('express');
-
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-const loginRoute=require('./chat/login')
-const messageRoute = require('./chat/chatapp')
+const adminRoute=require('./routes/admin')
+const shopRoute = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended:false}))
+app.use(express.static(path.join(__dirname,'public')))
 
-app.use(loginRoute)
-app.use(messageRoute)
-app.listen(7000)
+app.use(adminRoute)
+app.use(shopRoute)
+
+app.use((req,res,next) => {
+    res.status(404).sendFile(path.join(__dirname,'views','not-found.html'))
+})
+
+app.listen(3000)
+
+//module.exports = path.dirname(require.main.filename)
